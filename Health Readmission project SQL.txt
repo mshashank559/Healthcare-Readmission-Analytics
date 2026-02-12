@@ -1,0 +1,174 @@
+C:\Users\SHASHANK>psql -U postgres
+Password for user postgres:
+
+psql (14.20, server 18.1)
+WARNING: psql major version 14, server major version 18.
+         Some psql features might not work.
+WARNING: Console code page (437) differs from Windows code page (1252)
+         8-bit characters might not work correctly. See psql reference
+         page "Notes for Windows users" for details.
+Type "help" for help.
+
+postgres=# CREATE DATABASE hospital_analytics;
+CREATE DATABASE
+postgres=# \c hospital_analytics
+psql (14.20, server 18.1)
+WARNING: psql major version 14, server major version 18.
+         Some psql features might not work.
+You are now connected to database "hospital_analytics" as user "postgres".
+hospital_analytics=# CREATE TABLE hospital_readmission (
+hospital_analytics(#     circulatory_flag INT,
+hospital_analytics(#     injury_flag INT,
+hospital_analytics(#     time_in_hospital INT,
+hospital_analytics(#     total_visits INT,
+hospital_analytics(#     number_diagnoses INT,
+hospital_analytics(#     readmitted_flag INT,
+hospital_analytics(#     visit_risk_tier_Low INT,
+hospital_analytics(#     visit_risk_tier_Medium INT,
+hospital_analytics(#     visit_risk_tier_Very_High INT,
+hospital_analytics(#     los_tier_Long INT,
+hospital_analytics(#     los_tier_Medium INT,
+hospital_analytics(#     los_tier_Short INT,
+hospital_analytics(#     diagnosis_tier_Low INT,
+hospital_analytics(#     diagnosis_tier_Medium INT,
+hospital_analytics(#     diagnosis_tier_Very_High INT
+hospital_analytics(# );
+CREATE TABLE
+hospital_analytics=# \copy hospital_readmission
+\copy: parse error at end of line
+hospital_analytics=# FROM "D:\PROJECTS\Healthcare Projects\hospital_readmission_cleaned.csv"
+hospital_analytics-# DELIMITER ','
+hospital_analytics-# CSV HEADER;
+ERROR:  syntax error at or near "FROM"
+LINE 1: FROM "D:\PROJECTS\Healthcare Projects\hospital_readmission_c...
+        ^
+hospital_analytics=# \copy hospital_readmission FROM 'D:/PROJECTS/Healthcare Projects/hospital_readmission_cleaned.csv' DELIMITER ',' CSV HEADER;
+ERROR:  invalid input syntax for type integer: "Low"
+CONTEXT:  COPY hospital_readmission, line 2, column circulatory_flag: "Low"
+hospital_analytics=# DROP TABLE hospital_readmission;
+DROP TABLE
+hospital_analytics=# CREATE TABLE hospital_readmission (
+hospital_analytics(#     circulatory_flag INT,
+hospital_analytics(#     injury_flag INT,
+hospital_analytics(#     time_in_hospital INT,
+hospital_analytics(#     total_visits INT,
+hospital_analytics(#     number_diagnoses INT,
+hospital_analytics(#     readmitted_flag INT,
+hospital_analytics(#     visit_risk_tier_Low INT,
+hospital_analytics(#     visit_risk_tier_Medium INT,
+hospital_analytics(#     visit_risk_tier_Very_High INT,
+hospital_analytics(#     los_tier_Long INT,
+hospital_analytics(#     los_tier_Medium INT,
+hospital_analytics(#     los_tier_Short INT,
+hospital_analytics(#     diagnosis_tier_Low INT,
+hospital_analytics(#     diagnosis_tier_Medium INT,
+hospital_analytics(#     diagnosis_tier_Very_High INT
+hospital_analytics(# );
+CREATE TABLE
+hospital_analytics=# type "D:\PROJECTS\Healthcare Projects\hospital_readmission_cleaned.csv"
+hospital_analytics-# \copy hospital_readmission FROM 'D:/PROJECTS/Healthcare Projects/hospital_readmission_cleaned.csv' DELIMITER ',' CSV HEADER;
+ERROR:  invalid input syntax for type integer: "Low"
+CONTEXT:  COPY hospital_readmission, line 2, column circulatory_flag: "Low"
+hospital_analytics-# DROP TABLE hospital_readmission;
+ERROR:  syntax error at or near "type"
+LINE 1: type "D:\PROJECTS\Healthcare Projects\hospital_readmission_c...
+        ^
+hospital_analytics=# DROP TABLE hospital_readmission;
+DROP TABLE
+hospital_analytics=# CREATE TABLE hospital_readmission (
+hospital_analytics(#     circulatory_flag TEXT,
+hospital_analytics(#     injury_flag TEXT,
+hospital_analytics(#     time_in_hospital INT,
+hospital_analytics(#     total_visits INT,
+hospital_analytics(#     number_diagnoses INT,
+hospital_analytics(#     readmitted_flag INT,
+hospital_analytics(#     visit_risk_tier_Low TEXT,
+hospital_analytics(#     visit_risk_tier_Medium TEXT,
+hospital_analytics(#     visit_risk_tier_Very_High TEXT,
+hospital_analytics(#     los_tier_Long TEXT,
+hospital_analytics(#     los_tier_Medium TEXT,
+hospital_analytics(#     los_tier_Short TEXT,
+hospital_analytics(#     diagnosis_tier_Low TEXT,
+hospital_analytics(#     diagnosis_tier_Medium TEXT,
+hospital_analytics(#     diagnosis_tier_Very_High TEXT
+hospital_analytics(# );
+CREATE TABLE
+hospital_analytics=# DROP TABLE IF EXISTS hospital_readmission;
+DROP TABLE
+hospital_analytics=#
+hospital_analytics=# CREATE TABLE hospital_readmission (
+hospital_analytics(#     visit_risk_tier TEXT,
+hospital_analytics(#     los_tier TEXT,
+hospital_analytics(#     diagnosis_tier TEXT,
+hospital_analytics(#     circulatory_flag INT,
+hospital_analytics(#     injury_flag INT,
+hospital_analytics(#     time_in_hospital INT,
+hospital_analytics(#     total_visits INT,
+hospital_analytics(#     number_diagnoses INT,
+hospital_analytics(#     readmitted_flag INT
+hospital_analytics(# );
+CREATE TABLE
+hospital_analytics=# \copy hospital_readmission
+\copy: parse error at end of line
+hospital_analytics=# FROM 'D:/PROJECTS/Healthcare Projects/hospital_readmission_cleaned.csv'
+hospital_analytics-# DELIMITER ',' CSV HEADER;
+ERROR:  syntax error at or near "FROM"
+LINE 1: FROM 'D:/PROJECTS/Healthcare Projects/hospital_readmission_c...
+        ^
+hospital_analytics=# \copy hospital_readmission FROM 'D:/PROJECTS/Healthcare Projects/hospital_readmission_cleaned.csv' DELIMITER ',' CSV HEADER;
+COPY 101766
+hospital_analytics=# SELECT COUNT(*) FROM hospital_readmission;
+ count
+--------
+ 101766
+(1 row)
+
+
+hospital_analytics=# SELECT * FROM hospital_readmission LIMIT 10;
+ visit_risk_tier | los_tier | diagnosis_tier | circulatory_flag | injury_flag | time_in_hospital | total_visits | number_diagnoses | readmitted_flag
+-----------------+----------+----------------+------------------+-------------+------------------+--------------+------------------+-----------------
+ Low             | Short    | Low            |                0 |           0 |                1 |            0 |                1 |               0
+ Low             | Medium   | High           |                0 |           0 |                3 |            0 |                9 |               0
+ High            | Short    | Medium         |                0 |           0 |                2 |            3 |                6 |               0
+ Low             | Short    | Medium         |                1 |           0 |                2 |            0 |                7 |               0
+ Low             | Short    | Medium         |                0 |           0 |                1 |            0 |                5 |               0
+ Low             | Medium   | High           |                1 |           0 |                3 |            0 |                9 |               0
+ Low             | Medium   | Medium         |                1 |           0 |                4 |            0 |                7 |               0
+ Low             | Medium   | High           |                1 |           0 |                5 |            0 |                8 |               0
+ Low             | Extended | High           |                1 |           0 |               13 |            0 |                8 |               0
+ Low             | Extended | High           |                1 |           0 |               12 |            0 |                8 |               0
+(10 rows)
+
+
+hospital_analytics=# SELECT COUNT(*)
+hospital_analytics-# FROM hospital_readmission
+hospital_analytics-# WHERE time_in_hospital IS NULL;
+ count
+-------
+     0
+(1 row)
+
+
+hospital_analytics=# SELECT readmitted_flag, COUNT(*)
+hospital_analytics-# FROM hospital_readmission
+hospital_analytics-# GROUP BY readmitted_flag;
+ readmitted_flag | count
+-----------------+-------
+               0 | 90409
+               1 | 11357
+(2 rows)
+
+
+hospital_analytics=# SELECT visit_risk_tier, COUNT(*)
+hospital_analytics-# FROM hospital_readmission
+hospital_analytics-# GROUP BY visit_risk_tier;
+ visit_risk_tier | count
+-----------------+-------
+ Very_High       |  4425
+ High            | 11510
+ Medium          | 30003
+ Low             | 55828
+(4 rows)
+
+
+hospital_analytics=#
